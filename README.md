@@ -1,3 +1,11 @@
+# NAME
+
+WebService::Bonusly - A handy library for accessing the Bonus.ly API
+
+# VERSION
+
+version 0.151580
+
 # SYNOPSIS
 
     use WebService::Bonusly;
@@ -43,7 +51,6 @@
         
     $res = $bonusly->values->get( id => '...' );
     $res = $bonusly->values->list;
-    
 
 # DESCRIPTION
 
@@ -242,3 +249,14 @@ Required Parameters: `id`
     $res = $bonusly->values->list;
 
 Performs a GET against `/api/v1/values` at bonus.ly.
+
+# AUTHOR
+
+Andrew Sterling Hanenkamp <hanenkamp@cpan.org>
+
+# COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2015 by Qubling Software LLC.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
