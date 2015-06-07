@@ -11,7 +11,7 @@ has ws => (
     isa         => 'WebService::Bonusly',
     required    => 1,
     weak_ref    => 1,
-    handles     => [ qw( tokan base_url ua ) ],
+    handles     => [ qw( token base_url ua ) ],
 );
 
 [% FOR method IN methods -%]
@@ -44,8 +44,8 @@ sub [% name -%] {
 
     my $res = $self->ua->get($path);
     [% ELSIF def.method == 'POST' OR def.method == 'PUT' %]
-    [% IF def.token -%]$clean{access_token} = $self->token;[% END -%]
-    my $content = encode_json(%clean);
+    [% IF def.token -%]$clean{access_token} = $self->token;[% END %]
+    my $content = encode_json(\%clean);
     my $res = $self->ua->post($path, [], $content); 
     [% ELSE %]
     [% THROW method "Bad Method " _ method %]
