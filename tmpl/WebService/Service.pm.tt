@@ -16,18 +16,18 @@ has ws => (
 
 [% FOR method IN methods -%]
 [% name = method.key -%]
-[% def  = method.value -%]
+[% def  = method.value %]
 sub [% name -%] {
     my ($self, %params) = @_;
 
     my %clean;
     [% FOR field IN def.required.merge(def.optional) -%]
-    [% IF field.match('^%'); field.replace('^%', '') %]
-    croak "field [% field -%] must be a HASH for [% service -%]->[% name -%]"
+    [% IF field.match('^%'); field = field.replace('^%', '') %]
+    croak "parameter [% field -%] must be a HASH for [% service -%]->[% name -%]"
         if defined $params{[% field %]} and ref($params{[% field %]}) ne 'HASH';
     [% END -%]
     [% IF def.is_required(field) %]
-    croak "field [% field -%] is required for [% service -%]->[% name -%]"
+    croak "parameter [% field -%] is required for [% service -%]->[% name -%]"
         unless defined $params{[% field -%]};
     [% END %]
     $clean{[% field -%]} = $params{[% field -%]};
@@ -35,7 +35,7 @@ sub [% name -%] {
 
     my $path = $self->base_url . "[% def.path %]";
     $path =~ s/:(\w+)/delete $params{$1}/ge;
-    [% IF method == 'GET' OR method == 'DELETE' %]
+    [% IF def.method == 'GET' OR def.method == 'DELETE' %]
     $path .= '?';
     [% IF def.token -%]$path .= 'access_token=' . $self->token;[% END -%]
     while (my ($k, $v) = each %clean) {
@@ -43,13 +43,18 @@ sub [% name -%] {
     }
 
     my $res = $self->ua->get($path);
-    [% ELSIF method == 'POST' OR method == 'PUT' %]
+    [% ELSIF def.method == 'POST' OR def.method == 'PUT' %]
     [% IF def.token -%]$clean{access_token} = $self->token;[% END -%]
     my $content = encode_json(%clean);
     my $res = $self->ua->post($path, [], $content); 
+    [% ELSE %]
+    [% THROW method "Bad Method " _ method %]
     [% END %]
     return decode_json($res->content);
 }
 [% END -%]
+
+=for Pod::Coverage *EVERYTHING*
+=cut
 
 __PACKAGE__->meta->make_immutable;
