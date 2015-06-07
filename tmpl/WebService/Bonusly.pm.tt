@@ -1,0 +1,94 @@
+package WebService::Bonusly;
+
+use v5.14;
+use Moose;
+use Furl;
+
+[% FOR service IN services -%]
+use WebService::Bonusly::[% service.ucfirst -%];
+[% END -%]
+# ABSTRACT: A handy library for accessing the Bonus.ly API
+
+our $BONUSLY_API_URL = 'https://bonus.ly/api/v1/';
+
+=head1 SYNOPSIS
+
+    use WebService::Bonusly;
+    my $bonusly = WebService::Bonusly->new( token => $token );
+    [% FOR service IN services -%]
+    [% FOR method IN api.$service %]
+    $res = $bonusly->[% service %]->[% method.key %][% IF method.value.required.size == 1 %]([% FOR field IN method.value.required %] [% field %] => '...' [% END %])[% ELSIF method.value.required.size > 1 %]([% FOR field IN method.value.required %]
+        [% field %] => [% IF field == 'amount' %]42[% ELSE %]'...'[% END %],[% END %]
+    )[% END %];[% END %]
+    [% END %]
+=head1 DESCRIPTION
+
+This is a fairly simple library for performing actions with the Bonus.ly API.
+
+=head1 ATTRIBUTES
+
+=head2 token
+
+This is the access token to use to perform actions with.
+
+=cut 
+
+has token => (
+    is          => 'rw',
+    isa         => 'Str',
+    required    => 1,
+);
+
+has base_url => (
+    is          => 'ro',
+    isa         => 'Str',
+    required    => 1,
+    default     => $BONUSLY_API_URL,
+);
+
+has ua => (
+    is          => 'ro',
+    required    => 1,
+    lazy        => 1,
+    builder     => '_build_ua',
+);
+
+sub _build_ua { Furl->new }
+
+[% FOR service IN services -%]
+=head2 [% service %]
+
+This provides methods for accessing the [% service.ucfirst %] aspects of the API. This provides the following methods:
+[% FOR method IN api.$service %]
+=head3 [% method.key %][% obj = 0 %]
+
+    $res = $bonusly->[% service %]->[% method.key %][% IF method.value.required.size > 0 OR method.value.optional.size > 0 %](%params)[% END %];
+
+Performs a [% method.value.method %] against C</api/v1/[% method.value.path %]> at bonus.ly.[% IF method.value.required.size > 0 %]
+
+Required Parameters: [% FOR field IN method.value.required %]C<[% IF field.match('^%') %][% obj = field.substr(1) %][% field.substr(1) %][% ELSE %][% field %][% END %]>[% UNLESS loop.last %], [% END %][% END %][% END %][% IF method.value.optional.size > 0 %]
+
+Optional Parameters: [% FOR field IN method.value.optional %]C<[% IF field.match('^%') %][% obj = field.substr(1) %][% field.substr(1) %][% ELSE %][% field %][% END %]>[% UNLESS loop.last %], [% END %][% END %][% END %][% IF obj %]
+
+The C<[% obj %]> parameter must be given a reference to a hash.[% END %]
+[% END %]
+=cut
+
+has [% service -%] => (
+    is          => 'ro',
+    isa         => 'WebService::Bonusly::[% service.ucfirst -%]',
+    required    => 1,
+    lazy        => 1,
+    builder     => '_build_[% service -%]',
+);
+
+sub _build_[% service -%] {
+    my $self = shift;
+    WebService::Bonusly::[% service.ucfirst -%]->new(
+        ws => $self,
+    );
+}
+
+[% END -%]
+
+__PACKAGE__->meta->make_immutable;
