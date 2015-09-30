@@ -91,4 +91,17 @@ sub _build_[% service -%] {
 
 [% END -%]
 
+=head1 DEVELOPMENT
+
+If you are interested in helping develop this library. Please check it out from github. See L<https://github.com/zostay/WebService-Bonusly>. The library is automatically generated from a script named F<apigen.pl>. To build the library you will need to install L<Dist::Zilla> and run:
+
+    dzil authordeps | cpanm
+    dzil build
+
+Instead of running the "dzil build" command you may also run:
+
+    ./apigen.pl
+
+The templates for generating the code are found in F<tmpl>.
+
 __PACKAGE__->meta->make_immutable;

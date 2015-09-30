@@ -4,7 +4,7 @@ WebService::Bonusly - A handy library for accessing the Bonus.ly API
 
 # VERSION
 
-version 0.151580
+version 0.152730
 
 # SYNOPSIS
 
@@ -250,9 +250,24 @@ Required Parameters: `id`
 
 Performs a GET against `/api/v1/values` at bonus.ly.
 
+# DEVELOPMENT
+
+If you are interested in helping develop this library. Please check it out from github. See [https://github.com/zostay/WebService-Bonusly](https://github.com/zostay/WebService-Bonusly). The library is automatically generated from a script named `apigen.pl`. To build the library you will need to install [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla) and run:
+
+    dzil authordeps | cpanm
+    dzil build
+
+Instead of running the "dzil build" command you may also run:
+
+    ./apigen.pl
+
+The templates for generating the code are found in `tmpl`.
+
+\_\_PACKAGE\_\_->meta->make\_immutable;
+
 # AUTHOR
 
-Andrew Sterling Hanenkamp <hanenkamp@cpan.org>
+Andrew Sterling Hanenkamp &lt;hanenkamp@cpan.org>
 
 # COPYRIGHT AND LICENSE
 
