@@ -31,6 +31,9 @@ my %api = (
             path     => 'users/:id',
             required => [ qw( id ) ],
         },
+        me => {
+            path     => 'users/me',
+        },
         redemptions => {
             path     => 'users/:id/redemptions',
         },
