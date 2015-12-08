@@ -4,7 +4,7 @@ WebService::Bonusly - A handy library for accessing the Bonus.ly API
 
 # VERSION
 
-version 0.152730
+version 0.153420
 
 # SYNOPSIS
 
@@ -46,6 +46,7 @@ version 0.152730
     $res = $bonusly->users->delete( id => '...' );
     $res = $bonusly->users->get( id => '...' );
     $res = $bonusly->users->list;
+    $res = $bonusly->users->me;
     $res = $bonusly->users->redemptions;
     $res = $bonusly->users->update( id => '...' );
         
@@ -214,6 +215,12 @@ Required Parameters: `id`
 
 Performs a GET against `/api/v1/users` at bonus.ly.
 
+### me
+
+    $res = $bonusly->users->me;
+
+Performs a GET against `/api/v1/users/me` at bonus.ly.
+
 ### redemptions
 
     $res = $bonusly->users->redemptions;
@@ -262,8 +269,6 @@ Instead of running the "dzil build" command you may also run:
     ./apigen.pl
 
 The templates for generating the code are found in `tmpl`.
-
-\_\_PACKAGE\_\_->meta->make\_immutable;
 
 # AUTHOR
 
