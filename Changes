@@ -1,0 +1,10 @@
+{{$NEXT}}
+
+v0.153420 December 7, 2015
+
+    * Added /user/me support (HT: sjohnston)
+    * Fixed a missing =cut in Bonusly.pm
+
+v0.151580 June 6, 2015
+
+    * Initial release
