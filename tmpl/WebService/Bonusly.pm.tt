@@ -104,4 +104,6 @@ Instead of running the "dzil build" command you may also run:
 
 The templates for generating the code are found in F<tmpl>.
 
+=cut
+
 __PACKAGE__->meta->make_immutable;
