@@ -75,4 +75,12 @@ sub print_debug {
     warn @_, "\n";
 }
 
+=begin Pod::Coverage
+
+    print_debug
+
+=end Pod::Coverage
+
+=cut
+
 __PACKAGE__->meta->make_immutable;
