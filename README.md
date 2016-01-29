@@ -1,11 +1,3 @@
-# NAME
-
-WebService::Bonusly - A handy library for accessing the Bonus.ly API
-
-# VERSION
-
-version 0.153420
-
 # SYNOPSIS
 
     use WebService::Bonusly;
@@ -43,15 +35,23 @@ version 0.153420
         first_name => '...',
         last_name => '...',
     );
+    $res = $bonusly->users->autocomplete( search => '...' );
+    $res = $bonusly->users->bonuses( id => '...' );
+    $res = $bonusly->users->create_redemption(
+        id => '...',
+        denomination_id => '...',
+    );
     $res = $bonusly->users->delete( id => '...' );
     $res = $bonusly->users->get( id => '...' );
     $res = $bonusly->users->list;
     $res = $bonusly->users->me;
-    $res = $bonusly->users->redemptions;
+    $res = $bonusly->users->neighborhood( id => '...' );
+    $res = $bonusly->users->redemptions( id => '...' );
     $res = $bonusly->users->update( id => '...' );
         
     $res = $bonusly->values->get( id => '...' );
     $res = $bonusly->values->list;
+    
 
 # DESCRIPTION
 
@@ -62,6 +62,12 @@ This is a fairly simple library for performing actions with the Bonus.ly API.
 ## token
 
 This is the access token to use to perform actions with.
+
+## debug
+
+This is a boolean flag that, when set to true, causes messages to be printed to STDERR about what is being sent to and received from bonus.ly. 
+
+This is done through calls to the `print_debug` method.
 
 ## authentication
 
@@ -95,7 +101,7 @@ Performs a POST against `/api/v1/bonuses` at bonus.ly.
 
 Required Parameters: `receiver_email`, `reason`, `amount`
 
-Optional Parameters: `giver_email`
+Optional Parameters: `giver_email`, `parent_bonus_id`
 
 ### list
 
@@ -103,7 +109,7 @@ Optional Parameters: `giver_email`
 
 Performs a GET against `/api/v1/bonuses` at bonus.ly.
 
-Optional Parameters: `limit`, `start_time`, `end_time`, `non_zero`, `top_level`, `giver_email`, `receiver_email`, `user_email`, `hashtag`
+Optional Parameters: `limit`, `skip`, `start_time`, `end_time`, `non_zero`, `top_level`, `giver_email`, `receiver_email`, `user_email`, `hashtag`, `include_children`
 
 ## companies
 
@@ -135,7 +141,7 @@ This provides methods for accessing the Leaderboards aspects of the API. This pr
 
 Performs a GET against `/api/v1/analytics/standouts` at bonus.ly.
 
-Optional Parameters: `role`, `value`, `custom_property_name`, `custom_property_value`
+Optional Parameters: `role`, `value`, `limit`, `period`, `custom_property_name`, `custom_property_value`
 
 ## redemptions
 
@@ -193,6 +199,32 @@ Optional Parameters: `custom_properties`, `user_mode`, `budget_boost`, `external
 
 The `custom_properties` parameter must be given a reference to a hash.
 
+### autocomplete
+
+    $res = $bonusly->users->autocomplete(%params);
+
+Performs a GET against `/api/v1/users/autocomplete` at bonus.ly.
+
+Required Parameters: `search`
+
+### bonuses
+
+    $res = $bonusly->users->bonuses(%params);
+
+Performs a GET against `/api/v1/users/:id/bonuses` at bonus.ly.
+
+Required Parameters: `id`
+
+Optional Parameters: `skip`, `start_time`, `hashtag`, `end_time`, `include_children`, `limit`, `role`
+
+### create\_redemption
+
+    $res = $bonusly->users->create_redemption(%params);
+
+Performs a POST against `/api/v1/users/:id/redemptions` at bonus.ly.
+
+Required Parameters: `id`, `denomination_id`
+
 ### delete
 
     $res = $bonusly->users->delete(%params);
@@ -211,9 +243,11 @@ Required Parameters: `id`
 
 ### list
 
-    $res = $bonusly->users->list;
+    $res = $bonusly->users->list(%params);
 
 Performs a GET against `/api/v1/users` at bonus.ly.
+
+Optional Parameters: `limit`, `skip`, `email`, `sort`
 
 ### me
 
@@ -221,11 +255,25 @@ Performs a GET against `/api/v1/users` at bonus.ly.
 
 Performs a GET against `/api/v1/users/me` at bonus.ly.
 
+### neighborhood
+
+    $res = $bonusly->users->neighborhood(%params);
+
+Performs a GET against `/api/v1/users/:id/neighborhood` at bonus.ly.
+
+Required Parameters: `id`
+
+Optional Parameters: `days`
+
 ### redemptions
 
-    $res = $bonusly->users->redemptions;
+    $res = $bonusly->users->redemptions(%params);
 
 Performs a GET against `/api/v1/users/:id/redemptions` at bonus.ly.
+
+Required Parameters: `id`
+
+Optional Parameters: `limit`, `skip`
 
 ### update
 
@@ -269,14 +317,3 @@ Instead of running the "dzil build" command you may also run:
     ./apigen.pl
 
 The templates for generating the code are found in `tmpl`.
-
-# AUTHOR
-
-Andrew Sterling Hanenkamp &lt;hanenkamp@cpan.org>
-
-# COPYRIGHT AND LICENSE
-
-This software is copyright (c) 2015 by Qubling Software LLC.
-
-This is free software; you can redistribute it and/or modify it under
-the same terms as the Perl 5 programming language system itself.
