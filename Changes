@@ -2,6 +2,7 @@
 
     * Moved critical code from the templates to Base.pm and Service.pm in order
       to make the modules a little easier to maintain.
+    * Added debug mode for Frew.
     * Added tests. \o/
     * Moved the API configuration to api.yml, which is used for code generation
       and for testing.

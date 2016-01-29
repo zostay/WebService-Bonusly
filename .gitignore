@@ -1,3 +1,11 @@
-lib
 .build
 WebService-Bonusly-*
+lib/WebService/Bonusly.pm
+lib/WebService/Bonusly/Authentication.pm
+lib/WebService/Bonusly/Bonuses.pm
+lib/WebService/Bonusly/Companies.pm
+lib/WebService/Bonusly/Leaderboards.pm
+lib/WebService/Bonusly/Redemptions.pm
+lib/WebService/Bonusly/Rewards.pm
+lib/WebService/Bonusly/Users.pm
+lib/WebService/Bonusly/Values.pm

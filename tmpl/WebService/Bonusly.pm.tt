@@ -33,6 +33,12 @@ This is a fairly simple library for performing actions with the Bonus.ly API.
 
 This is the access token to use to perform actions with.
 
+=head2 debug
+
+This is a boolean flag that, when set to true, causes messages to be printed to STDERR about what is being sent to and received from bonus.ly. 
+
+This is done through calls to the C<print_debug> method.
+
 [% FOR service IN services -%]
 =head2 [% service %]
 
