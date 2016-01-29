@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+0.160291  2016-01-29 08:58:06-06:00 America/Chicago
+
     * Expanded support to include new parameters and actions using the published
       documentation on gelato.io.
     * Added stub POD to service files to point back to Bonusly.pm
