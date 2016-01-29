@@ -1,0 +1,76 @@
+---
+bonuses:
+    list:
+        path: bonuses
+        optional: [ limit, start_time, end_time, non_zero, top_level, giver_email, receiver_email, user_email, hashtag ]
+    get:
+        path: 'bonuses/:id'
+        required: [ id ]
+    give:
+        method: POST
+        path: bonuses
+        required: [ receiver_email, reason, amount ]
+        optional: [ giver_email ]
+users:
+    list:
+        path: users
+    get:
+        path: 'users/:id'
+        required: [ id ]
+    me:
+        path: users/me
+    redemptions:
+        path: 'users/:id/redemptions'
+        required: [ id ]
+    add:
+        method: POST
+        path: users
+        required: [ email, first_name, last_name ]
+        optional: [ '%custom_properties', user_mode, budget_boost, external_unique_id ]
+    update:
+        method: PUT
+        path: 'users/:id'
+        required: [ id ]
+        optional: [ email, first_name, last_name, '%custom_properties', user_mode, budget_boost, external_unique_id ]
+    delete:
+        method: DELETE
+        path: 'users/:id'
+        required: [ id ]
+values:
+    list:
+        path: values
+    get:
+        path: 'values/:id'
+        required: [ id ]
+companies:
+    show:
+        path: companies/show
+    update:
+        method: PUT
+        path: companies/update
+        optional: [ name, '%custom_properties' ]
+leaderboards:
+    standouts:
+        path: analytics/standouts
+        optional: [ role, value, custom_property_name, custom_property_value ]
+rewards:
+    list:
+        path: rewards
+        optional: [ catalog_country, request_country, personalize_for ]
+    get:
+        path: 'rewards/:id'
+        required: [ id ]
+    take:
+        method: POST
+        path: rewards
+        required: [ denomination_id, user_id ]
+redemptions:
+    get:
+        path: 'redemptions/:id'
+        required: [ id ]
+authentication:
+    sessions:
+        method: POST
+        path: sessions
+        required: [ email, password ]
+        token: 0

@@ -1,15 +1,17 @@
+[% WARNING %]
 package WebService::Bonusly;
 
 use v5.14;
 use Moose;
 use Furl;
 
+extends 'WebService::Bonusly::Base';
+
 [% FOR service IN services -%]
 use WebService::Bonusly::[% service.ucfirst -%];
 [% END -%]
-# ABSTRACT: A handy library for accessing the Bonus.ly API
 
-our $BONUSLY_API_URL = 'https://bonus.ly/api/v1/';
+# ABSTRACT: A handy library for accessing the Bonus.ly API
 
 =head1 SYNOPSIS
 
@@ -30,30 +32,6 @@ This is a fairly simple library for performing actions with the Bonus.ly API.
 =head2 token
 
 This is the access token to use to perform actions with.
-
-=cut 
-
-has token => (
-    is          => 'rw',
-    isa         => 'Str',
-    required    => 1,
-);
-
-has base_url => (
-    is          => 'ro',
-    isa         => 'Str',
-    required    => 1,
-    default     => $BONUSLY_API_URL,
-);
-
-has ua => (
-    is          => 'ro',
-    required    => 1,
-    lazy        => 1,
-    builder     => '_build_ua',
-);
-
-sub _build_ua { Furl->new }
 
 [% FOR service IN services -%]
 =head2 [% service %]
@@ -79,15 +57,8 @@ has [% service -%] => (
     isa         => 'WebService::Bonusly::[% service.ucfirst -%]',
     required    => 1,
     lazy        => 1,
-    builder     => '_build_[% service -%]',
+    builder     => __PACKAGE__->_service_builder('[% service -%]'),
 );
-
-sub _build_[% service -%] {
-    my $self = shift;
-    WebService::Bonusly::[% service.ucfirst -%]->new(
-        ws => $self,
-    );
-}
 
 [% END -%]
 

@@ -1,8 +1,15 @@
 #!/usr/bin/env perl
 use v5.14;
 
-use File::Path 'remove_tree';
+use YAML qw( LoadFile );
+
+my %api = %{ LoadFile('api.yml') };
+my @apis = keys %api;
 
 print "Removing auto-generated files ... ";
-remove_tree 'lib';
+for my $api (@apis) {
+    my $file = "lib/WebService/Bonusly/" . ucfirst($api) . ".pm";
+    print "Unlinking $file.";
+    unlink $file;
+}
 say "done.";

@@ -1,18 +1,11 @@
+[% WARNING %]
 package WebService::Bonusly::[% service.ucfirst %];
 
 use v5.14;
 use Moose;
 use Carp;
-use JSON;
-use URI::Escape;
 
-has ws => (
-    is          => 'ro',
-    isa         => 'WebService::Bonusly',
-    required    => 1,
-    weak_ref    => 1,
-    handles     => [ qw( token base_url ua ) ],
-);
+extends 'WebService::Bonusly::Service';
 
 [% FOR method IN methods -%]
 [% name = method.key -%]
@@ -34,24 +27,12 @@ sub [% name -%] {
         if defined $params{[% field %]};
     [% END -%]
 
-    my $path = $self->base_url . "[% def.path %]";
-    $path =~ s/:(\w+)/delete $params{$1}/ge;
-    [% IF def.method == 'GET' OR def.method == 'DELETE' %]
-    $path .= '?';
-    [% IF def.token -%]$path .= 'access_token=' . $self->token;[% END -%]
-    while (my ($k, $v) = each %clean) {
-        $path .= uri_escape($k) . '=' . uri_escape($v);
-    }
-
-    my $res = $self->ua->get($path);
-    [% ELSIF def.method == 'POST' OR def.method == 'PUT' %]
-    [% IF def.token -%]$path .= '?access_token=' . $self->token;[% END -%]
-    my $content = encode_json(\%clean);
-    my $res = $self->ua->[% def.method.lower %]($path, [ 'Content-Type' => 'application/json' ], $content); 
-    [% ELSE %]
-    [% THROW method "Bad Method " _ method %]
-    [% END %]
-    return decode_json($res->content);
+    return $self->_perform_action(
+        '[% def.method %]',
+        '[% def.path %]',
+        \%clean,
+        [% IF NOT def.token %]'tokenless',[% END %]
+    );
 }
 [% END -%]
 

@@ -1,5 +1,14 @@
 {{$NEXT}}
 
+    * Moved critical code from the templates to Base.pm and Service.pm in order
+      to make the modules a little easier to maintain.
+    * Added tests. \o/
+    * Moved the API configuration to api.yml, which is used for code generation
+      and for testing.
+    * Added an AUTO-GENERATED FILE warning to the top of auto-generated files.
+    * Bug: Fixed a bug where DELETE method requests were being sent as GET instead.
+    * Bug: Fixed a missing id requirement on users.redemptions.
+
 v0.153420 December 7, 2015
 
     * Added /user/me support (HT: sjohnston)
