@@ -1,5 +1,11 @@
 {{$NEXT}}
 
+    * Expanded support to include new parameters and actions using the published
+      documentation on gelato.io.
+    * Added stub POD to service files to point back to Bonusly.pm
+    * Added support for custom_properties in GET requests, e.g., as seen in
+      bonuses.list and users.list
+
 0.160290  2016-01-28 23:38:09-06:00 America/Chicago
 
     * Moved critical code from the templates to Base.pm and Service.pm in order

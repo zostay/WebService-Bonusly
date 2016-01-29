@@ -7,6 +7,14 @@ use Carp;
 
 extends 'WebService::Bonusly::Service';
 
+# ABSTRACT: Implements the bonus.ly [% service %] service
+
+=head1 DESCRIPTION
+
+This module implements the service. For documentation of this service, see L<WebService::Bonusly>
+
+=cut
+
 [% FOR method IN methods -%]
 [% name = method.key -%]
 [% def  = method.value %]
@@ -23,8 +31,12 @@ sub [% name -%] {
     croak "parameter [% field -%] is required for [% service -%]->[% name -%]"
         unless defined $params{[% field -%]};
     [% END %]
-    $clean{[% field -%]} = $params{[% field -%]}
+    $clean{[% field -%]} = delete $params{[% field -%]}
         if defined $params{[% field %]};
+    [% END -%]
+
+    [% IF def.allow_any %]
+    $clean{$_} = $params{$_} for keys %params;
     [% END -%]
 
     return $self->_perform_action(

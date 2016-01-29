@@ -2,7 +2,7 @@
 bonuses:
     list:
         path: bonuses
-        optional: [ limit, start_time, end_time, non_zero, top_level, giver_email, receiver_email, user_email, hashtag ]
+        optional: [ limit, skip, start_time, end_time, non_zero, top_level, giver_email, receiver_email, user_email, hashtag, include_children, '*' ]
     get:
         path: 'bonuses/:id'
         required: [ id ]
@@ -10,18 +10,35 @@ bonuses:
         method: POST
         path: bonuses
         required: [ receiver_email, reason, amount ]
-        optional: [ giver_email ]
+        optional: [ giver_email, parent_bonus_id ]
 users:
     list:
         path: users
+        optional: [ limit, skip, email, sort, '*' ]
     get:
         path: 'users/:id'
         required: [ id ]
     me:
         path: users/me
+    neighborhood:
+        path: 'users/:id/neighborhood'
+        required: [ id ]
+        optional: [ days ]
     redemptions:
         path: 'users/:id/redemptions'
         required: [ id ]
+        optional: [ limit, skip ]
+    bonuses:
+        path: 'users/:id/bonuses'
+        required: [ id ]
+        optional: [ skip, start_time, hashtag, end_time, include_children, '*', limit, role ]
+    autocomplete:
+        path: 'users/autocomplete'
+        required: [ search ]
+    create_redemption:
+        method: POST
+        path: 'users/:id/redemptions'
+        required: [ id, denomination_id ]
     add:
         method: POST
         path: users
@@ -52,7 +69,7 @@ companies:
 leaderboards:
     standouts:
         path: analytics/standouts
-        optional: [ role, value, custom_property_name, custom_property_value ]
+        optional: [ role, value, limit, period, custom_property_name, custom_property_value ]
 rewards:
     list:
         path: rewards

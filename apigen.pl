@@ -20,6 +20,15 @@ for my $service (keys %api) {
         $def->{method}   //= 'GET';
         $def->{token}    //= 1;
 
+        my $allow_any = grep { $_ eq '*' } @{ $def->{optional} };
+        if ($allow_any)  {
+            @{ $def->{optional} } = grep { $_ ne '*' } @{ $def->{optional} };
+            $def->{allow_any} = 1;
+        }
+        else {
+            $def->{allow_any} = 0;
+        }
+
         $def->{is_required} = sub {
             my $name = shift;
             any { $_ eq $name } @{ $def->{required} };

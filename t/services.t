@@ -39,9 +39,10 @@ for my $service_name (sort keys %api) {
 
         for my $action (sort keys %{ $api{ $service_name } }) {
             my $def = $api{$service_name}{$action};
+            my $allow_any = grep { $_ eq '*' } @{ $def->{optional} // [] };
 
             subtest "Action $action" => sub {
-                my @optional = @{ $def->{optional} // [] };
+                my @optional = grep { $_ ne '*' } @{ $def->{optional} // [] };
                 my @required = @{ $def->{required} // [] };
 
                 my $i = 1;
@@ -105,6 +106,8 @@ for my $service_name (sort keys %api) {
 
                 my %post_vals = %vals;
                 delete $post_vals{id};
+                $post_vals{some_outlier_param_never_used} = -1
+                    if $allow_any;
 
                 if (!defined $def->{method} || $def->{method} eq 'GET' || $def->{method} eq 'DELETE') {
                     $expected_path .= join('&', '', map { "$_=$post_vals{$_}" } sort keys %post_vals);
