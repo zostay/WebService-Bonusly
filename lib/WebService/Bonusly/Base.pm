@@ -52,7 +52,11 @@ has debug => (
     default     => 0,
 );
 
-sub _build_ua { LWP::UserAgent->new }
+sub _build_ua {
+    LWP::UserAgent->new(
+        keep_alive => 1,
+    );
+}
 
 sub _service_builder {
     my ($class, $service_name) = @_;
