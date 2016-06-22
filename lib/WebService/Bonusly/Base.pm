@@ -3,13 +3,13 @@ package WebService::Bonusly::Base;
 use v5.14;
 use Class::Load qw( load_class );
 use Moose;
-use Furl;
+use LWP::UserAgent;
 
 # ABSTRACT: A utility class for WebService::Bonusly
 
 =head1 DESCRIPTION
 
-This is a utility class for the Bonus.ly web service. 
+This is a utility class for the Bonus.ly web service.
 
 See L<WebService::Bonusly>.
 
@@ -52,7 +52,7 @@ has debug => (
     default     => 0,
 );
 
-sub _build_ua { Furl->new }
+sub _build_ua { LWP::UserAgent->new }
 
 sub _service_builder {
     my ($class, $service_name) = @_;

@@ -50,12 +50,12 @@ sub _perform_action {
     elsif ($method eq 'POST' || $method eq 'PUT') {
         $path .= '?access_token=' . $self->token unless $tokenless;
         my $content = to_json(\%clean, $self->_json_flags);
-        
+
         $self->print_debug("SEND>> $method $path");
         $self->print_debug("SEND>> Content-Type: application/json");
         $self->print_debug("SEND>> $content");
         if ($method eq 'POST') {
-            $res = $self->ua->post($path, [ 'Content-Type' => 'application/json' ], $content); 
+            $res = $self->ua->post($path, [ 'Content-Type' => 'application/json' ], $content);
         }
         else {
             $res = $self->ua->put($path, [ 'Content-Type' => 'application/json' ], $content);
