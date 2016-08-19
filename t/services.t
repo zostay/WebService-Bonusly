@@ -48,7 +48,7 @@ for my $service_name (sort keys %api) {
                 my $i = 1;
                 my %vals;
                 while (@required) {
-                    throws_ok { 
+                    throws_ok {
                         $service->$action(%vals);
                     } qr/parameter $required[0] is required/;
 
@@ -58,7 +58,7 @@ for my $service_name (sort keys %api) {
 
                 my $expected_path = "test/$def->{path}";
                 $expected_path =~ s/:id/$vals{id}/;
-                $expected_path .= '?access_token=test' 
+                $expected_path .= '?access_token=test'
                     unless defined $def->{token} && $def->{token} == 0;
 
                 while (1) {
@@ -67,7 +67,17 @@ for my $service_name (sort keys %api) {
                     my $this_expected_path = $expected_path;
 
                     my ($name, $args) = $ua->next_call;
-                    my (undef, $path, $headers, $content) = @$args;
+                    my (undef, $path, @fields) = @$args;
+                    my $content;
+                    my $headers = [];
+                    while (my ($key, $value) = splice @fields, 0, 2) {
+                        if ($key eq 'Content') {
+                            $content = $value;
+                        }
+                        else {
+                            push @$headers, $key => $value;
+                        }
+                    }
 
                     is($name, $def->{method} ? lc $def->{method} : 'get', "$service_name.$action uses correct method");
 
@@ -102,7 +112,17 @@ for my $service_name (sort keys %api) {
 
                 $service->$action(%vals, some_outlier_param_never_used => -1);
                 my ($name, $args) = $ua->next_call;
-                my (undef, $path, $headers, $content) = @$args;
+                my (undef, $path, @fields) = @$args;
+                my $content;
+                my $headers = [];
+                while (my ($key, $value) = splice @fields, 0, 2) {
+                    if ($key eq 'Content') {
+                        $content = $value;
+                    }
+                    else {
+                        push @$headers, $key => $value;
+                    }
+                }
 
                 my %post_vals = %vals;
                 delete $post_vals{id};
