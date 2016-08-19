@@ -9,7 +9,7 @@ my @apis = keys %api;
 print "Removing auto-generated files ... ";
 for my $api (@apis) {
     my $file = "lib/WebService/Bonusly/" . ucfirst($api) . ".pm";
-    print "Unlinking $file.";
+    print "Unlinking $file... ";
     unlink $file;
 }
 say "done.";
