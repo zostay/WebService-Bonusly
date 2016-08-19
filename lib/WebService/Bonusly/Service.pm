@@ -55,10 +55,10 @@ sub _perform_action {
         $self->print_debug("SEND>> Content-Type: application/json");
         $self->print_debug("SEND>> $content");
         if ($method eq 'POST') {
-            $res = $self->ua->post($path, [ 'Content-Type' => 'application/json' ], $content);
+            $res = $self->ua->post($path, 'Content-Type' => 'application/json', Content => $content);
         }
         else {
-            $res = $self->ua->put($path, [ 'Content-Type' => 'application/json' ], $content);
+            $res = $self->ua->put($path, 'Content-Type' => 'application/json', Content => $content);
         }
     }
     else {
