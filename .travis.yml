@@ -8,9 +8,11 @@ perl:
   - "5.14"
 before_install:
   - cpanm Dist::Zilla
+  - dzil authordeps
   - dzil authordeps | cpanm
   - cpanm Pod::Coverage::TrustPod
 install:
+  - dzil listdeps
   - dzil listdeps | cpanm
 script:
   - dzil test --release --verbose
