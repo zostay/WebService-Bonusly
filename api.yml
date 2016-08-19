@@ -9,8 +9,8 @@ bonuses:
     give:
         method: POST
         path: bonuses
-        required: [ receiver_email, reason, amount ]
-        optional: [ giver_email, parent_bonus_id ]
+        required: [ reason ]
+        optional: [ giver_email, parent_bonus_id, receiver_email, amount ]
 users:
     list:
         path: users
