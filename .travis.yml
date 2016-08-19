@@ -7,10 +7,9 @@ perl:
   - "5.16"
   - "5.14"
 before_install:
-  - cpanm Dist::Zilla
-  - dzil authordeps
-  - dzil authordeps | cpanm
-  - cpanm Pod::Coverage::TrustPod
+  - cpanm --notest --quiet Dist::Zilla
+  - dzil authordeps --notest --quiet | cpanm
+  - cpanm --notest --quiet Pod::Coverage::TrustPod
 install:
   - dzil listdeps
   - dzil listdeps | cpanm
