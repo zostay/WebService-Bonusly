@@ -1,3 +1,11 @@
+# NAME
+
+WebService::Bonusly - A handy library for accessing the Bonus.ly API
+
+# VERSION
+
+version 0.160292
+
 # SYNOPSIS
 
     use WebService::Bonusly;
@@ -51,7 +59,6 @@
         
     $res = $bonusly->values->get( id => '...' );
     $res = $bonusly->values->list;
-    
 
 # DESCRIPTION
 
@@ -317,3 +324,14 @@ Instead of running the "dzil build" command you may also run:
     ./apigen.pl
 
 The templates for generating the code are found in `tmpl`.
+
+# AUTHOR
+
+Andrew Sterling Hanenkamp <hanenkamp@cpan.org>
+
+# COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2016 by Qubling Software LLC.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
