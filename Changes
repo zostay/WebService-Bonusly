@@ -1,5 +1,8 @@
 {{$NEXT}}
 
+    * Switching internals from Furl to LWP::UserAgent for better keepalive
+      and encoding handling. (#4)
+
 0.160291  2016-01-29 08:58:06-06:00 America/Chicago
 
     * Expanded support to include new parameters and actions using the published
