@@ -4,7 +4,7 @@ WebService::Bonusly - A handy library for accessing the Bonus.ly API
 
 # VERSION
 
-version 0.160292
+version 1.000
 
 # SYNOPSIS
 
@@ -17,11 +17,7 @@ version 0.160292
     );
         
     $res = $bonusly->bonuses->get( id => '...' );
-    $res = $bonusly->bonuses->give(
-        receiver_email => '...',
-        reason => '...',
-        amount => 42,
-    );
+    $res = $bonusly->bonuses->give( reason => '...' );
     $res = $bonusly->bonuses->list;
         
     $res = $bonusly->companies->show;
@@ -106,9 +102,9 @@ Required Parameters: `id`
 
 Performs a POST against `/api/v1/bonuses` at bonus.ly.
 
-Required Parameters: `receiver_email`, `reason`, `amount`
+Required Parameters: `reason`
 
-Optional Parameters: `giver_email`, `parent_bonus_id`
+Optional Parameters: `giver_email`, `parent_bonus_id`, `receiver_email`, `amount`
 
 ### list
 
