@@ -2,6 +2,11 @@
 
     * Switching internals from Furl to LWP::UserAgent for better keepalive
       and encoding handling. (#4)
+    * Bonusly has made receiver_email and amount deprecated on bonuses and moved
+      these to the reason instead. Therefore, they are now marked as optional.
+      (HT: sjohnston)
+    * Improved internals related to build handling.
+    * Added some more tests and CI via Travis-CI.
 
 0.160291  2016-01-29 08:58:06-06:00 America/Chicago
 
