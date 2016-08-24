@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+1.000     2016-08-24 00:09:53-05:00 America/Chicago
+
     * Switching internals from Furl to LWP::UserAgent for better keepalive
       and encoding handling. (#4)
     * Bonusly has made receiver_email and amount deprecated on bonuses and moved
