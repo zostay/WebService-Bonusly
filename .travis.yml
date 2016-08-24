@@ -8,10 +8,10 @@ perl:
   - "5.14"
 before_install:
   - cpanm --notest --quiet Dist::Zilla
-  - dzil authordeps --notest --quiet | cpanm
+  - dzil authordeps | cpanm --notest --quiet
   - cpanm --notest --quiet Pod::Coverage::TrustPod
   - perl -c ./apigen.pl
 install:
-  - dzil listdeps --notest --quiet | cpanm
+  - dzil listdeps | cpanm --notest --quiet
 script:
   - dzil test --release --verbose
