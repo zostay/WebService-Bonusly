@@ -10,8 +10,8 @@ before_install:
   - cpanm --notest --quiet Dist::Zilla
   - dzil authordeps --notest --quiet | cpanm
   - cpanm --notest --quiet Pod::Coverage::TrustPod
+  - perl -c ./apigen.pl
 install:
-  - dzil listdeps
-  - dzil listdeps | cpanm
+  - dzil listdeps --notest --quiet | cpanm
 script:
   - dzil test --release --verbose
