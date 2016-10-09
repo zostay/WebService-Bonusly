@@ -1,7 +1,9 @@
 {{$NEXT}}
 
     * Remove the code for the non-existent (or removed) rewards->take endpoint
-      (Arthur Axel fREW Schmidt)
+      (HT: Arthur Axel fREW Schmidt)
+    * Return synthetic false status when json fails to decode
+      (HT: Arthur Axel fREW Schmidt)
 
 1.000     2016-08-24 00:09:53-05:00 America/Chicago
 
