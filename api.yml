@@ -77,10 +77,6 @@ rewards:
     get:
         path: 'rewards/:id'
         required: [ id ]
-    take:
-        method: POST
-        path: rewards
-        required: [ denomination_id, user_id ]
 redemptions:
     get:
         path: 'redemptions/:id'

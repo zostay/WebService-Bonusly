@@ -29,10 +29,6 @@ version 1.000
         
     $res = $bonusly->rewards->get( id => '...' );
     $res = $bonusly->rewards->list;
-    $res = $bonusly->rewards->take(
-        denomination_id => '...',
-        user_id => '...',
-    );
         
     $res = $bonusly->users->add(
         email => '...',
@@ -177,14 +173,6 @@ Required Parameters: `id`
 Performs a GET against `/api/v1/rewards` at bonus.ly.
 
 Optional Parameters: `catalog_country`, `request_country`, `personalize_for`
-
-### take
-
-    $res = $bonusly->rewards->take(%params);
-
-Performs a POST against `/api/v1/rewards` at bonus.ly.
-
-Required Parameters: `denomination_id`, `user_id`
 
 ## users
 

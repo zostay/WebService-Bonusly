@@ -1,5 +1,8 @@
 {{$NEXT}}
 
+    * Remove the code for the non-existent (or removed) rewards->take endpoint
+      (Arthur Axel fREW Schmidt)
+
 1.000     2016-08-24 00:09:53-05:00 America/Chicago
 
     * Switching internals from Furl to LWP::UserAgent for better keepalive
