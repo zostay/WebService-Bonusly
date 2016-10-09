@@ -1,5 +1,8 @@
 {{$NEXT}}
 
+    * Return synthetic false status when json fails to decode
+      (Arthur Axel fREW Schmidt)
+
 1.000     2016-08-24 00:09:53-05:00 America/Chicago
 
     * Switching internals from Furl to LWP::UserAgent for better keepalive
