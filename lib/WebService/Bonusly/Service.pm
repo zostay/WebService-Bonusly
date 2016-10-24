@@ -3,6 +3,7 @@ package WebService::Bonusly::Service;
 use v5.14;
 use Moose;
 use JSON;
+use Try::Tiny;
 use URI::Escape;
 
 # ABSTRACT: A utility class for WebService::Bonusly services
@@ -67,7 +68,17 @@ sub _perform_action {
 
     $self->print_debug("RECV>> ", $res->content);
 
-    return from_json($res->content);
+    try {
+        from_json($res->content);
+    } catch {
+        +{
+            success => JSON::false,
+            message => $res->message,
+            content => $res->content,
+            status => $res->code,
+            response_object => $res,
+        }
+    };
 }
 
 __PACKAGE__->meta->make_immutable;

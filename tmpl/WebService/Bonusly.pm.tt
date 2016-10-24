@@ -26,6 +26,23 @@ use WebService::Bonusly::[% service.ucfirst -%];
 
 This is a fairly simple library for performing actions with the Bonus.ly API.
 
+=head1 ERRORS
+
+Normally bonusly will return C<< { success => 0, message => $reason } >> when
+there are errors, but on the off chance that something went really wrong,
+C<WebService::Bonusly> will synthesize a data structure like this:
+
+ {
+     success => 0,
+     message => 'Not Found',
+     status => 404,
+     content => "<html>...",
+     response_object => HTTP::Response->new(...),
+ }
+
+When handling errors, you B<may> want to consider checking if there is a
+C<response_object> and logging its contents somewhere.
+
 =head1 ATTRIBUTES
 
 =head2 token
