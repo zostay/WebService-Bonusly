@@ -4,7 +4,7 @@ WebService::Bonusly - A handy library for accessing the Bonus.ly API
 
 # VERSION
 
-version 1.000
+version 1.001
 
 # SYNOPSIS
 
@@ -55,6 +55,23 @@ version 1.000
 # DESCRIPTION
 
 This is a fairly simple library for performing actions with the Bonus.ly API.
+
+# ERRORS
+
+Normally bonusly will return `{ success => 0, message => $reason }` when
+there are errors, but on the off chance that something went really wrong,
+`WebService::Bonusly` will synthesize a data structure like this:
+
+    {
+        success => 0,
+        message => 'Not Found',
+        status => 404,
+        content => "<html>...",
+        response_object => HTTP::Response->new(...),
+    }
+
+When handling errors, you **may** want to consider checking if there is a
+`response_object` and logging its contents somewhere.
 
 # ATTRIBUTES
 
